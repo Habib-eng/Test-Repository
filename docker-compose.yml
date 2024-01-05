@@ -1,0 +1,7 @@
+version: 'v3'
+services:
+  web_service:
+    build: ./api/Dockerfile
+    network_mode: host
+    volumes:
+      - ./media:/media
