@@ -98,36 +98,14 @@ WSGI_APPLICATION = 'api.wsgi.application'
 
 # Database
 # https://docs.djangoproject.com/en/4.1/ref/settings/#databases
-if os.getenv('GITHUB_WORKFLOW'):
-    DATABASES = {
+DATABASES = {
         'default': {
             'ENGINE': 'django.db.backends.mysql',
-            'NAME': 'neuroparser',
-            'USER': 'root',
-            'PASSWORD': '12345678',
-            'HOST':'127.0.0.1',
-            'PORT':'3306',
-        },
-        'nosql_database': {
-            'ENGINE': 'djongo',
-            'NAME': 'neuroparser',
-            'CLIENT': {
-                'port': 27017,
-                'host': '127.0.0.1',    
-                'username': 'root',
-                'password': '12345678' 
-            }
-        }
-    }
-else:
-    DATABASES = {
-         'default': {
-            'ENGINE': 'django.db.backends.postgresql',
-            'NAME': os.getenv('DB_NAME'),
-            'USER': os.getenv('DB_USER'),
-            'PASSWORD': os.getenv('DB_PASSWORD'),
-            'HOST': os.getenv('DB_HOST'),
-            'PORT': os.getenv('DB_PORT')
+            'NAME': os.getenv("NAME"),
+            'USER': os.getenv("USER"),
+            'PASSWORD': os.getenv("PASSWORD"),
+            'HOST': os.getenv("HOST"),
+            'PORT': os.getenv("PORT"),
         },
         'nosql_database': {
             'ENGINE': 'djongo',
