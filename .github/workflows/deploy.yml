@@ -21,7 +21,7 @@ jobs:
               with:
                 context: .
                 push: true
-                tags: neurodata/neuroparser:${{ github.sha }}
+                tags: jiji66/neuroparser:${{ github.sha }}
             
             - name: Deploy to EC2
               uses: appleboy/ssh-action@master
