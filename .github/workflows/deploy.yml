@@ -29,4 +29,4 @@ jobs:
                 host: ${{ secrets.EC2_HOST }}
                 username: ${{ secrets.USER_HOST }}
                 password: ${{ secrets.PASSWORD_HOST }}
-                script: docker container run --name web_service --network host neurodata/neuroparser:${{ github.sha }}
+                script: docker container run --name web_service --network host jiji66/neuroparser:${{ github.sha }}
