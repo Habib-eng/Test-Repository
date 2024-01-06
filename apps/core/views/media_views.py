@@ -1,12 +1,12 @@
 from rest_framework import permissions
 from urllib.parse import unquote
 from rest_framework.views import APIView
+from rest_framework.mixins import ListModelMixin
 from rest_framework.response import Response
 import os
 import mimetypes
 from django.http import FileResponse
 from django.conf import settings
-
 
 class MediaView(APIView):
     def get(self, request, path, format=None):
@@ -31,3 +31,7 @@ class MediaView(APIView):
             # FileResponse - A streaming HTTP response class optimized for files.
             return FileResponse(open(file_path, "rb"), content_type=mimetype)
         return Response("Access to this file is permitted.", status=404)
+
+class HealthView(APIView, ListModelMixin):
+    def get(self, request, path, format = None):
+        return Response("Django service running succefully ", status=200)

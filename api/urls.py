@@ -15,12 +15,14 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path, include, re_path
-from apps.core.views.media_views import MediaView
+from apps.core.views.media_views import MediaView, HealthView
 
 urlpatterns = [
-    path(r'^admin/', admin.site.urls),
+    re_path(r"^health/(?P<path>.*)", HealthView.as_view(), name="health-check"),
     re_path(r"^media/(?P<path>.*)", MediaView.as_view(), name="get-media-path"),
     re_path(r"^account/", include("djoser.urls.base")),
     re_path(r"^auth/", include("djoser.urls.jwt")),
     re_path(r'^api/', include('apps.core.urls')),
+    path(r'^admin/', admin.site.urls),
+
 ]

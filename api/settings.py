@@ -13,7 +13,12 @@ https://docs.djangoproject.com/en/4.1/ref/settings/
 from pathlib import Path    
 from datetime import timedelta
 import os
+import environ
 
+# Initialise environment variables
+env = environ.Env()
+environ.Env.read_env()
+print(env("DB_NAME"))
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 
@@ -101,11 +106,11 @@ WSGI_APPLICATION = 'api.wsgi.application'
 DATABASES = {
         'default': {
             'ENGINE': 'django.db.backends.mysql',
-            'NAME': os.getenv("NAME"),
-            'USER': os.getenv("USER"),
-            'PASSWORD': os.getenv("PASSWORD"),
-            'HOST': os.getenv("HOST"),
-            'PORT': os.getenv("PORT"),
+            'NAME': env("DB_NAME"),
+            'USER': env("DB_USER"),
+            'PASSWORD': env("DB_PASSWORD"),
+            'HOST': env("DB_HOST"),
+            'PORT': env("DB_PORT"),
         },
         'nosql_database': {
             'ENGINE': 'djongo',
