@@ -15,10 +15,10 @@ RUN pip install -r requirements.txt
 
 EXPOSE 8000
 
-ENV NAME=neuroparser
-ENV PASSWORD=neuroparser123
-ENV USER=root
-ENV HOST=127.0.0.1
-ENV PORT=3306
+ENV DB_NAME=neuroparser
+ENV DB_PASSWORD=neuroparser123
+ENV DB_USER=root
+ENV DB_HOST=127.0.0.1
+ENV DB_PORT=3306
 
 CMD [ "python", "manage.py", "runserver"]
