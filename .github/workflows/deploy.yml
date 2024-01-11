@@ -28,6 +28,8 @@ jobs:
                 ECR_REPOSITORY: ${{ secrets.AWS_ECR_REPO }}
                 IMAGE_TAG: latest
               run: |                
+                echo SQL_DB_NAME=${{secrets.SQLDB_CREDS_NAME}} SQL_DB_USER=${{secrets.SQLDB_CREDS_USERNAME}}
+                echo $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG
                 docker build --build-arg SQL_DB_NAME=${{secrets.SQLDB_CREDS_NAME}} SQL_DB_USER=${{secrets.SQLDB_CREDS_USERNAME}} SQL_DB_PASSWORD=${{secrets.SQLDB_CREDS_PASSWORD }} SQL_DB_HOST=${{ secrets.SQLDB_CREDS_HOST }} SQL_DB_PORT=${{ secrets.SQLDB_CREDS_PORT }} NOSQL_DB_NAME=${{ secrets.NOSQLDB_CREDS_NAME }} NOSQL_DB_USER=${{secrets.NOSQLDB_CREDS_USERNAME }} NOSQL_DB_PASSWORD=${{secrets.NOSQL_CREDS_PASSWORD }} NOSQL_DB_HOST=${{secrets.NOSQL_CREDS_HOST }} NOSQL_DB_PORT=${{secrets.NOSQL_CREDS_PORT }} APP_URL=${{ secrets.APP_URL }} DOMAIN=${{ secrets.DOMAIN }} JWT_SECRET=${{ secrets.JWT_SECRET }} APP_SECRET=${{ secrets.APP_URL }} DEFAULT_FROM_EMAIL=${{ secrets.DEFAULT_FROM_EMAIL }} EMAIL_HOST=${{ secrets.EMAIL_HOST }} EMAIL_HOST_USER=${{ secrets.EMAIL_HOST_USER}} EMAIL_HOST_PASSWORD=${{ secrets.EMAIL_HOST_PASSWORD }} EMAIL_PORT=${{ secrets.EMAIL_PORT }} EMAIL_USE_TLS=${{ secrets.EMAIL_USE_TLS }} -t $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG .
                 docker push $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG
                 
