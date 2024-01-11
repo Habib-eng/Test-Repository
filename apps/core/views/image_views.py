@@ -3,8 +3,10 @@ from rest_framework.response import Response
 from rest_framework import status, permissions, mixins, generics
 from django.conf import settings
 from apps.core.services.image_service import ImageService
+from apps.core.models import ImageMetadata
 from apps.core.serializers import ImageMetadataSerializer
 from django.http import Http404
+from bson.objectid import ObjectId
 
 class ImageMetadataList(APIView):
 
@@ -40,3 +42,13 @@ class ImageMetadataDetail(APIView):
         document = image_service.update_document_annotations(document_id, request.data)    
         serializer = ImageMetadataSerializer(document)
         return Response(status=status.HTTP_201_CREATED, data=serializer.data)
+
+    def delete(self, request, project_id, document_id, format = None):
+        image = ImageMetadata.objects.filter(_id=ObjectId(document_id)).first()
+        image.delete()
+        return Response(status=status.HTTP_204_NO_CONTENT)
+    
+    def get(self, request, project_id, document_id, format = None):
+        document = ImageMetadata.objects.filter(_id=ObjectId(document_id)).first()
+        serializer = ImageMetadataSerializer(document)
+        return Response(status=status.HTTP_200_OK, data=serializer.data)

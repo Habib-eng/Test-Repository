@@ -3,6 +3,7 @@ from rest_framework.serializers import ModelSerializer, CharField, IntegerField
 from apps.core.enums import ProjectState
 from djongo.models.fields import ObjectIdField
 
+
 class PrebuiltOCRModelSerializer(ModelSerializer):
     """
      A class used to serialize a prebuilt model
@@ -10,9 +11,13 @@ class PrebuiltOCRModelSerializer(ModelSerializer):
     class Meta:
         model = PrebuiltOCRModel
         fields = ['id', 'name', 'document','description','category','image']
+class DocumentTypeSerializer(ModelSerializer):
+    class Meta:
+        model = DocumentType
+        fields = ('id', 'name','image_url', 'comment')
 
 class ProjectSerializer(ModelSerializer):
-
+    based_document = DocumentTypeSerializer()
     class Meta:
         model = Project
         fields = ['id', 'type', 'description', 'based_document', 'code', 'state', 'labels', 'created_on']
@@ -22,8 +27,8 @@ class ImageMetadataSerializer(ModelSerializer):
 
     class Meta:
         model = ImageMetadata
-        fields = ('_id','name', 'extension', 'url','annotations', 'uploaded_date', 'project_ref')
-        read_only_field = ('_id','uploaded_date', 'url', 'name','annotations', 'extension')
+        fields = ('_id','name', 'extension', 'width', 'height', 'url','annotations', 'uploaded_date', 'project_ref')
+        read_only_field = ('_id','uploaded_date', 'width', 'height', 'url', 'name','annotations', 'extension')
 
 class UserSerializer(ModelSerializer):
     email = CharField(read_only=True)
@@ -67,8 +72,3 @@ class AttemptSerializer(ModelSerializer):
     class Meta:
         model = Attempt
         fields = ('created_at','document_location','document_metadata','result')
-
-class DocumentTypeSerializer(ModelSerializer):
-    class Meta:
-        model = DocumentType
-        fields = ('id', 'name','image_url', 'comment')

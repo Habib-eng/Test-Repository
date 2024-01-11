@@ -23,6 +23,6 @@ urlpatterns = [
     re_path(r"^account/", include("djoser.urls.base")),
     re_path(r"^auth/", include("djoser.urls.jwt")),
     re_path(r'^api/', include('apps.core.urls')),
-    path(r'^admin/', admin.site.urls),
+    re_path(r'^admin/', admin.site.urls),
 
 ]

@@ -97,6 +97,8 @@ class ImageMetadata(nosql_models.Model):
     _id = nosql_models.ObjectIdField()
     name = nosql_models.CharField(max_length=255)
     extension = nosql_models.CharField(max_length=255,choices=[(ext.value,None) for ext in list(ImageExtension)])
+    width = nosql_models.IntegerField()
+    height = nosql_models.IntegerField()
     url = nosql_models.URLField(max_length=255,default="")
     uploaded_date = nosql_models.DateTimeField(auto_now_add=True)
     annotations = nosql_models.TextField()

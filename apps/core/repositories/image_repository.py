@@ -3,11 +3,11 @@ from apps.core.serializers import ImageMetadataSerializer
 from bson.objectid import ObjectId
 import json
 class ImageRepository:
-    def create_image(self, name: str, extension: str, url: str, project_ref: str, annotations={}) -> str:
+    def create_image(self, name: str, extension: str, width: int, height: int, url: str, project_ref: str, annotations="[]") -> str:
         print("Creating new image ...")
         image = None
         try:
-            image = ImageMetadata(name= name, extension= extension, url= url, project_ref = project_ref)
+            image = ImageMetadata(name= name, extension= extension, width = width, height = height, url= url, project_ref = project_ref, annotations="[]")
             image.save(using="nosql_database")
         except Exception as e:
             print(e)

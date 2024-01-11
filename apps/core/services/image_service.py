@@ -17,7 +17,7 @@ class ImageService:
         for file in files:
             metadata = self.get_document_metadata(file)
             url = self.save_document(file)
-            image = self.repository.create_image(name=metadata["name"],extension=metadata["extension"],url=url,project_ref=self.project_ref)
+            image = self.repository.create_image(name=metadata["name"], extension=metadata["extension"], width=metadata['width'], height=metadata['height'],url=url,project_ref=self.project_ref)
             return image
     
     def save_document(self, uploaded_file: InMemoryUploadedFile) -> str:
@@ -36,6 +36,7 @@ class ImageService:
             "height" : image.height,
             "extension" : guess_type(uploaded_file.name)[0]
         }
+        print(image)
         return metadata
     
     def get_project_documents(self):

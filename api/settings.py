@@ -18,7 +18,6 @@ import environ
 # Initialise environment variables
 env = environ.Env()
 environ.Env.read_env()
-print(env("DB_NAME"))
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 
@@ -26,7 +25,7 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # See https://docs.djangoproject.com/en/4.1/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = 'django-insecure-2rzj^x+m+(eu5dnci-=b!6zuf0=a%x)+!)-&lsz3*=pzsk&r&u'
+SECRET_KEY = env("APP_SECRET")
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
@@ -102,24 +101,23 @@ WSGI_APPLICATION = 'api.wsgi.application'
 
 
 # Database
-# https://docs.djangoproject.com/en/4.1/ref/settings/#databases
 DATABASES = {
         'default': {
             'ENGINE': 'django.db.backends.mysql',
-            'NAME': env("DB_NAME"),
-            'USER': env("DB_USER"),
-            'PASSWORD': env("DB_PASSWORD"),
-            'HOST': env("DB_HOST"),
-            'PORT': env("DB_PORT"),
+            'NAME': env("SQL_DB_NAME"),
+            'USER': env("SQL_DB_USER"),
+            'PASSWORD': env("SQL_DB_PASSWORD"),
+            'HOST': env("SQL_DB_HOST"),
+            'PORT': env("SQL_DB_PORT"),
         },
         'nosql_database': {
             'ENGINE': 'djongo',
-            'NAME': 'neuroparser',
+            'NAME': env("NOSQL_DB_NAME"),
             'CLIENT': {
-                'port': 27017,
-                'host': '127.0.0.1',    
-                'username': 'root',
-                'password': '12345678' 
+                'port': env("NOSQL_DB_PORT"),
+                'host': env("NOSQL_DB_HOST"),    
+                'username': env("NOSQL_DB_USER"),
+                'password': env("NOSQL_DB_PASSWORD") 
             }
         }
     }
@@ -133,8 +131,8 @@ REST_FRAMEWORK = {
 }
 
 SITE_NAME = "NEUROPARSER"
-APP_URL = "http://localhost:8000"
-DOMAIN="localhost:5173"
+APP_URL = env("APP_URL")
+DOMAIN= env("DOMAIN")
 DJOSER = {
     'LOGIN_FIELD': 'email',
     'PASSWORD_RESET_CONFIRM_URL': '#/password/reset/confirm/{uid}/{token}',
@@ -173,7 +171,7 @@ SIMPLE_JWT = {
     "UPDATE_LAST_LOGIN": False,
 
     "ALGORITHM": "HS256",
-    "SIGNING_KEY": "jango-insecure-2rzj^x+m+(eu5dnci-=b!6zuf0=a%x)+!)-&lsz3*=pzsk&r&u",
+    "SIGNING_KEY": env("JWT_SECRET"),
     "VERIFYING_KEY": "",
     "AUDIENCE": None,
     "ISSUER": None,
@@ -182,32 +180,9 @@ SIMPLE_JWT = {
     "LEEWAY": 0,
 
     "AUTH_HEADER_TYPES": ("Bearer",),
-    # "AUTH_HEADER_NAME": "HTTP_AUTHORIZATION",
-    # "USER_ID_FIELD": "id",
-    # "USER_ID_CLAIM": "user_id",
-    # "USER_AUTHENTICATION_RULE": "rest_framework_simplejwt.authentication.default_user_authentication_rule",
-
-    # "AUTH_TOKEN_CLASSES": ("rest_framework_simplejwt.tokens.AccessToken",),
-    # "TOKEN_TYPE_CLAIM": "token_type",
-    # "TOKEN_USER_CLASS": "rest_framework_simplejwt.models.TokenUser",
-
-    # "JTI_CLAIM": "jti",
-
-    # "SLIDING_TOKEN_REFRESH_EXP_CLAIM": "refresh_exp",
-    # "SLIDING_TOKEN_LIFETIME": timedelta(minutes=5),
-    # "SLIDING_TOKEN_REFRESH_LIFETIME": timedelta(days=1),
-
-    # "TOKEN_OBTAIN_SERIALIZER": "rest_framework_simplejwt.serializers.TokenObtainPairSerializer",
-    # "TOKEN_REFRESH_SERIALIZER": "rest_framework_simplejwt.serializers.TokenRefreshSerializer",
-    # "TOKEN_VERIFY_SERIALIZER": "rest_framework_simplejwt.serializers.TokenVerifySerializer",
-    # "TOKEN_BLACKLIST_SERIALIZER": "rest_framework_simplejwt.serializers.TokenBlacklistSerializer",
-    # "SLIDING_TOKEN_OBTAIN_SERIALIZER": "rest_framework_simplejwt.serializers.TokenObtainSlidingSerializer",
-    # "SLIDING_TOKEN_REFRESH_SERIALIZER": "rest_framework_simplejwt.serializers.TokenRefreshSlidingSerializer",
 }
 
 # Internationalization
-# https://docs.djangoproject.com/en/4.1/topics/i18n/
-
 LANGUAGE_CODE = 'en-us'
 
 TIME_ZONE = 'UTC'
@@ -218,7 +193,6 @@ USE_TZ = True
 
 
 # Static files (CSS, JavaScript, Images)
-# https://docs.djangoproject.com/en/4.1/howto/static-files/
 
 MEDIA_URL = '/media/'
 MEDIA_ROOT = os.path.join(BASE_DIR,'media')
@@ -232,26 +206,12 @@ IMAGE_STORAGE_DIRECTORY = 'images'
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
-AWS_ACCESS_KEY_ID = 'AKIAXGBWDQGWEVKQRBNG'
-AWS_SECRET_ACCESS_KEY = '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'
-AWS_STORAGE_BUCKET_NAME = 'neuroparser' 
-AWS_S3_REGION_NAME = 'eu-west-3'
-AWS_S3_FILE_OVERWRITE = False
-AWS_DEFAULT_ACL = None
-AWS_S3_VERIFY = True
-
-# EMAIL_HOST = 'smtp.gmail.com'
-# EMAIL_HOST_USER = 'jlejla66@@gmail.com'
-# EMAIL_HOST_PASSWORD="gknl uxpy nrfe yrfl"
-# EMAIL_PORT = 587
-# EMAIL_USE_TLS = True
-
-DEFAULT_FROM_EMAIL="contact@groupeneurodata.com"
-EMAIL_BACKEND='django.core.mail.backends.smtp.EmailBackend'
-EMAIL_HOST = 'email-smtp.eu-west-1.amazonaws.com'
-EMAIL_HOST_USER = 'AKIAXGBWDQGWEQMVOPSS'
-EMAIL_HOST_PASSWORD="BIqUhctX1Bktaui8hkSq3T9rGwNb5UIlXZScXBLuMTOu"
-EMAIL_PORT = 587
-EMAIL_USE_TLS = True
+EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+DEFAULT_FROM_EMAIL = env("DEFAULT_FROM_EMAIL")
+EMAIL_HOST = env("EMAIL_HOST")
+EMAIL_HOST_USER = env("EMAIL_HOST_USER")
+EMAIL_HOST_PASSWORD = env("EMAIL_HOST_PASSWORD")
+EMAIL_PORT = env("EMAIL_PORT")
+EMAIL_USE_TLS = env("EMAIL_USE_TLS")
 
 # DEFAULT_FILE_STORAGE = 'api.custom_storage.MediaStorage'
