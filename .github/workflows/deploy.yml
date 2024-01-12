@@ -39,4 +39,4 @@ jobs:
                 host: ${{ secrets.EC2_HOST }}
                 username: ${{ secrets.USER_HOST }}
                 password: ${{ secrets.PASSWORD_HOST }}
-                script: docker container run -d --name web_service --network host ${{ steps.login-pf-aws-ecr.outputs.registry }}/neuroparser-backend:${{ github.sha }}
+                script: docker container run -d --name web_service-${{ github.sha }} --network host ${{ steps.login-pf-aws-ecr.outputs.registry }}/neuroparser-backend:${{ github.sha }}
