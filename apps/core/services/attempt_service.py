@@ -6,6 +6,7 @@ from .adapters import adapt
 from ..models import DocumentMetadata, Attempt
 from django.conf import settings
 from pdf2image import convert_from_path
+import uuid
 
 ALLOWED_EXTENSIONS = ["png", "pdf", "jpg", "jpeg"]
 AUTH_HEADER = "AMI_bEcfJ8ysBT7Cu92v"
@@ -136,6 +137,7 @@ class Ocr:
                 data = []  
             return data
         except requests.RequestException as e:
+            print(e)
             return [] 
     
 class PdfSpliter:
@@ -147,7 +149,7 @@ class PdfSpliter:
         pages = []
         images = convert_from_path(self.pdf_path)
         for i in range(len(images)):
-            page_path = os.path.join(settings.DOCUMENT_ROOT,f"page{str(i)}.jpg")
+            page_path = os.path.join(settings.DOCUMENT_ROOT,f"page{str(uuid.uuid4())}.jpg")
             images[i].save(page_path, 'JPEG')
             pages.append(page_path)
         return pages

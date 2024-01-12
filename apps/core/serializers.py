@@ -21,7 +21,7 @@ class ProjectSerializer(ModelSerializer):
     class Meta:
         model = Project
         fields = ['id', 'type', 'description', 'based_document', 'code', 'state', 'labels', 'created_on']
-        read_only_fields = ['id', 'state', 'created_on']
+        read_only_fields = ['id', 'state', 'created_on', 'code']
 
 class ImageMetadataSerializer(ModelSerializer):
 

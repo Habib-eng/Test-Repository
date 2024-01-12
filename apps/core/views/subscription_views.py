@@ -25,7 +25,7 @@ class SubscriptionList(APIView):
         if serializer.is_valid():
             try:
                 serializer.save(owner=request.user)
-                return Response(status=status.HTTP_201_CREATED,data=serializer.data)
+                return Response(status=status.HTTP_201_CREATED,data=serializer.data)            
             except Exception as e:
                 return Response(status=status.HTTP_406_NOT_ACCEPTABLE,data={"detail": "You have already subscribed to this OCR"})
         return Response(status=status.HTTP_400_BAD_REQUEST)
