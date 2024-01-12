@@ -57,4 +57,4 @@ ENV EMAIL_HOST_PASSWORD=${APP_SECRET}
 ENV EMAIL_PORT=${APP_SECRET}
 ENV EMAIL_USE_TLS=${APP_SECRET}
 
-ENTRYPOINT [ "docker-entrypoint.sh" ]
+ENTRYPOINT [ "./docker-entrypoint.sh" ]
